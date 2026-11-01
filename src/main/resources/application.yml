@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: cab-booking-api
+  datasource:
+    url: jdbc:h2:mem:cabdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: 8080
+  forward-headers-strategy: framework
+
+app:
+  jwt:
+    secret: ${APP_JWT_SECRET:local-development-key-change-before-deploy-2026}
+    lifetime: PT1H
+  fare:
+    currency: INR
+    base-fare: 50.00
+    per-kilometer: 18.00
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  cors:
+    allowed-origin-patterns: ${APP_CORS_ALLOWED_ORIGIN_PATTERNS:http://localhost:5173,http://127.0.0.1:5173,http://192.168.*:5173}
+  maps:
+    api-key: ${GOOGLE_MAPS_API_KEY:}
+    matching-radius-km: 15
+  stripe:
+    secret-key: ${STRIPE_SECRET_KEY:}
+    publishable-key: ${STRIPE_PUBLISHABLE_KEY:}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+  mail:
+    enabled: ${MAIL_ENABLED:false}
+    from: ${MAIL_FROM:no-reply@example.test}
+  admin:
+    email: ${APP_ADMIN_EMAIL:}
+    password: ${APP_ADMIN_PASSWORD:}
+
+logging:
+  level:
+    org.springframework.security: INFO
